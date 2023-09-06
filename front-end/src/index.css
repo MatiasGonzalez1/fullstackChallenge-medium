@@ -12,3 +12,19 @@
   font-style: normal;
 }
 
+body{
+  background: #fffffff2;
+  color: #242424;
+}
+
+.registerForm{
+  display: flex;
+  border: 1px solid #242424;
+  width: 60%;
+  height: auto;
+}
+
+.registerForm label, input{
+  margin: 5px;
+}
+

@@ -1,28 +1,6 @@
-import {
-  Box,
-  AppBar,
-  Link,
-  Toolbar,
-  Container,
-  Grid,
-  Button,
-  Avatar,
-} from "@mui/material";
-import React from "react";
-
-type themeNav = {
-  theme: string;
-}
-
-export const NavBar: React.FC<themeNav> = () => {
-  const sxHover = {
-    "&:hover": {
-      color: "#000",
-    },
-  };
-
+const Navbar = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div>
       <AppBar position="fixed">
         <Toolbar>
           <Container maxWidth="xl">
@@ -66,6 +44,7 @@ export const NavBar: React.FC<themeNav> = () => {
           </Container>
         </Toolbar>
       </AppBar>
-    </Box>
+    </div>
   );
-};
+}
+export default Navbar
