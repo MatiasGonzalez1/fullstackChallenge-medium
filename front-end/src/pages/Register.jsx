@@ -20,7 +20,7 @@ const Register = () => {
   return (
     <div className="registerForm">
       {error?.map((error, i)=>{
-        <div>
+        <div key={i}>
           {error}
         </div>
       })}

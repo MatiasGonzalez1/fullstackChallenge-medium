@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @font-face {
   font-family: 'gt-super';
   src: url(../fonts/GT-Super/GT-Super-Display-Regular.woff2);
@@ -13,18 +18,7 @@
 }
 
 body{
-  background: #fffffff2;
-  color: #242424;
-}
-
-.registerForm{
-  display: flex;
-  border: 1px solid #242424;
-  width: 60%;
-  height: auto;
-}
-
-.registerForm label, input{
-  margin: 5px;
+  background:#202020;
+  color: aliceblue;
 }
 
