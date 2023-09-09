@@ -1,4 +1,5 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import Cookies from "js-cookie"
 
 //funcion de llamada axios
 import {registerRequest, loginRequest} from '../api/auth.js'
@@ -44,6 +45,24 @@ export const AuthProvider = ({children}) =>{
     }
   }
 
+  //se borran los mensajes de error tres segundos después de mostrarse
+  // useEffect(()=>{  
+  //   if(error.length > 0){
+  //     const timer = setTimeout(()=>{
+  //       setError([])
+  //     }, 3000)
+  //     return ()=> clearTimeout(timer)
+  //   }
+  // }, [error])
+
+  useEffect(()=>{
+    const cookies = Cookies.get()
+    
+    if(cookies){
+      console.log(cookies)
+    }
+  }, [])
+  
   return(
     <AuthContext.Provider value={{
       signup,

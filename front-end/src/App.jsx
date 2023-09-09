@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./pages/Register.Page";
-import Login from "./pages/Login.Page";
+import {Register, Login, Home, Post, PostForm, Profile} from "./pages/index";
+import ProtectedRoute from "./utils/ProtectedRoute";
+
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -8,13 +9,16 @@ function App() {
    <AuthProvider>
      <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1 className="text-4xl font-bold">Home page</h1>} />
+        <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
-        <Route path="/posts" element={<h1>Posts</h1>} />
-        <Route path="/add-post" element={<h1>Add new post</h1>} />
-        <Route path="/posts/:id" element={<h1>Take one post</h1>} />
-        <Route path="/profile" element={<h1>Profile</h1>} />
+
+       <Route element={<ProtectedRoute/>}>
+       <Route path="/posts" element={<Post/>} />
+        <Route path="/add-post" element={<PostForm/>} />
+        <Route path="/posts/:id" element={<PostForm/>} />
+        <Route path="/profile" element={<Profile/>} />
+       </Route>
       </Routes>
     </BrowserRouter>
    </AuthProvider>
