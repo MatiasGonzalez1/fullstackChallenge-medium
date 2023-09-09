@@ -1,7 +1,7 @@
 import { createContext, useState, useContext } from "react";
 
 //funcion de llamada axios
-import {registerRequest} from '../api/auth.js'
+import {registerRequest, loginRequest} from '../api/auth.js'
 
 //todos los componentes que estén englobados van a poder hacer uso de los datos retornados
 export const AuthContext = createContext()
@@ -32,9 +32,22 @@ export const AuthProvider = ({children}) =>{
     setError(error.response.data.errors)
    }
   }
+
+  const signin = async (user) =>{
+    try {
+      const res = await loginRequest(user)
+      console.log(res)
+      setUser(res.data)
+      setIsAuthenticated(true)
+    } catch (error) {
+      setError(error.response.data.errors)
+    }
+  }
+
   return(
     <AuthContext.Provider value={{
       signup,
+      signin,
       user,
       isAuthenticated,
       error
