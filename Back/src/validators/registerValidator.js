@@ -17,7 +17,7 @@ export const validateCreateUser = [
   ,
   check('password')
   .exists().withMessage('password is required')
-  .trim().isLength({min:8}).withMessage('The name must have at least 8 characters')
+  .trim().isLength({min:8}).withMessage('The password must have at least 8 characters')
   .not().isEmpty().withMessage('password is empty'),
   check('email')
   .exists().withMessage('email is required')
