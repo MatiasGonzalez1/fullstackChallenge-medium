@@ -27,17 +27,21 @@ app.use(cors({
   credentials: true
 }))
 
-app.use(express.urlencoded({extended:true}))
-app.use(express.json())
+
+//Middlewares
 app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
 
+//Routes
+app.get("/api", (req,res)=>res.json({message: "Welcome to medium API"}) )
 app.use("/api", postRoutes );
 app.use("/api", authRoutes );
 
-
+//Errors handler
 app.use((req, res, next)=>{
-  res.status(404).json({error:'Sorry! 404 not found', try:['/api/signin', '/api/posts']})
+  res.status(404).json({error:'Sorry! 404 not found', try:['/api/signin', '/api/post']})
 });
 
 app.listen(PORT, ()=>{

@@ -33,8 +33,13 @@ const getPostsByUser = async (req, res)=>{
 
 const createPost = async (req, res) => {
     try {
+      const {authorId, title, content} = req.body
       const Post = await prisma.post.create({
-        data:req.body
+        data:{
+          authorId,
+          title,
+          content
+        }
       });
       res.send({status: 200, data:Post})
     } catch (error) {
@@ -88,12 +93,12 @@ const updatePost = async(req, res)=>{
 const deletePost = async(req, res)=>{
   try {
     const id = req.params.id
-    const deteleOne = await prisma.post.delete({
+    const deleteOne = await prisma.post.delete({
     where:{
       id:id
     }
   });
-    res.status(204).send({status:"success", postDeleted:deleteOne})
+   return res.status(204).send({status:"success", postDeleted:deleteOne})
   }
    catch (error) {
     res.status(500).send({error: '500 Internal Server Error'})  
