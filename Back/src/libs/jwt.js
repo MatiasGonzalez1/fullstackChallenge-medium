@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import { TOKEN_SECRET } from "../constants.js"
 
- export function createToken(payload){
+ export const createToken = (payload)=>{
   return new Promise((resolve, reject)=>{
     jwt.sign(
       payload,

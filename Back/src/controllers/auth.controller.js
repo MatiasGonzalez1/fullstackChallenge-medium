@@ -8,14 +8,18 @@ const createUser = async (req, res) => {
     const saltRounds = 10;
     const plainPassword = req.body.password;
     const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
-
+    const {firstName, lastName, email} = req.body
     const User = await prisma.user.create({
-      data: { ...req.body, password: hashedPassword },
+      data: { firstName, lastName, email, password: hashedPassword },
     });
 
     const token = await createToken({ id: User.id });
 
-    res.cookie("token", token);
+    res.cookie("token", token,{
+      httpOnly: true,
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000 //1 dia
+    });
 
     res.json({ status: 200, message: "User created successfully", data: User });
   } catch (error) {
@@ -41,7 +45,12 @@ const loginUser = async (req, res) => {
 
     const token = await createToken({ id: User.id });
 
-    res.cookie("token", token);
+    res.cookie("token", token,{
+      httpOnly: true,
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000 //1 dia
+    });
+
     res.json({ status: 200, message: "User loged successfully", data: User });
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -49,9 +58,11 @@ const loginUser = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.cookie("token", "", {
-    expire: new Date(0),
-  });
+  
+  res.clearCookie('token');
+  // res.cookie("token", "", {
+  //   expire: new Date(0),
+  // });
   return res.status(200).json({ message: "See you later buddy" });
 };
 

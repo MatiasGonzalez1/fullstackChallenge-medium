@@ -36,7 +36,7 @@ const createPost = async (req, res) => {
       const {authorId, title, content} = req.body
       const Post = await prisma.post.create({
         data:{
-          authorId,
+          authorId: req.decoded.id,
           title,
           content
         }
@@ -56,33 +56,40 @@ const getOnePost = async(req, res)=>{
         id:id
       }
     });
-
-     if(!getOne){
-      return res.send({status: 404, message:"Post not found"})
+    
+    if(!getOne){
+      return res.send({status: 404, message:"Post don't found"})
      }
+
     res.send({status:200, data:getOne})
   }
   catch(error){
-    res.status(500).send({error: '500'})
+    res.status(500).send({error: 'Something went wrong'})
   }
 }
 
 const updatePost = async(req, res)=>{
   try {
     const id = req.params.id
+    const {title, content} = req.body
     const updateOne = await prisma.post.update({
       where:{
         id:id
       },
-      data:req.body
+      data:{
+        title,
+        content
+      }
     });
 
     if(
-      !req.body.content 
+      !req.body.content  | !req.body.title
     ){
-      return res.status(403).send({status:403, data: {error: "This content cannot be empty"}})
-    }else{
-    res.send({status:200, data:updateOne})
+       res.status(403).send({status:403, data: {error: "Title and content cannot be empty"}})
+    }else if(!updateOne){
+       res.send({status: 404, message:"Post don't found"})
+     }else{
+      res.send({status:200, message:"updated post", data:updateOne})
     }
   }
    catch (error) {
